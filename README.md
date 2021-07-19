@@ -1,4 +1,9 @@
-# pokemon-app
+# Vue.js Pokemon Filter/Search App
+```
+RESTful Implemntation: https://pokeapi.co/
+
+GraphQL Beta: https://beta.pokeapi.co/graphql/console/
+```
 
 ## Project setup
 ```
