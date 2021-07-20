@@ -24,6 +24,8 @@ const champions = [
     new Champion('Ashe', 100),
     new Champion('Vayne', 200)
 ]
+
+// Created Resolver
 const rootValue = {
     language: () => 'GraphQL',
     getChampions: () => champions
