@@ -17,6 +17,11 @@ npm install
 npm run serve
 ```
 
+### Starts GraphQL server
+```
+node server
+```
+
 ### Compiles and minifies for production
 ```
 npm run build
