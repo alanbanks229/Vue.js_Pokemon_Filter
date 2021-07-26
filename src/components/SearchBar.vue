@@ -12,23 +12,26 @@
 
 export default {
     name: 'SearchBar',
-
+    data(){
+        return {
+            resulting_poke_id: null
+        }
+    },
     methods: {
         // child communication with parent (MainContainer)
-
         getSpecificPokemon(){
             console.log(this.$refs)
             fetch("https://pokeapi.co/api/v2/pokemon/" + this.$refs.search_query.value)
                 .then(response => response.json())
                 .then(data => {
                     this.$emit('search-click-event', data);
+                    this.resulting_poke_id = data.id;
                 })
             .catch(error => {
                 this.errorMsg = error;
                 console.log(error)
             })
-        }
-
+        },
     }
 }
 
