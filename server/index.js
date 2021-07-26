@@ -1,5 +1,5 @@
 //
-let Champion = require('./champion');
+// let Champion = require('./champion');
 
 const express = require('express')
 const { graphql, buildSchema } = require('graphql')
@@ -12,6 +12,7 @@ const schema = buildSchema(`
     type Query {
         language: String
         getChampions: [Champion]
+        getChampionByName(name: String!): Champion
     }
 
     type Champion {
@@ -26,7 +27,10 @@ const champions = [
 ]
 const rootValue = {
     language: () => 'GraphQL',
-    getChampions: () => champions
+    getChampions: () => champions,
+    getChampionByName: ({ name }) => {
+        return champions.find(x => x.name === name)
+    },
 }
 
 const app = express()

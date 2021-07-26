@@ -13,6 +13,9 @@
         {{ champion }}
       </div>
     </div>
+
+
+
     <br/>
     <button @click="getChampions">Get Champions</button>
     <button @click="getLanguage">Get Language</button>
@@ -22,6 +25,15 @@
     <MainContainer/>
     <buefy-table>
     </buefy-table>
+
+    <h3>Example 3</h3>
+    Name: <input v-model="name">
+    <div>
+      Data:
+      {{ champion }}
+    </div>
+    <button @click="getChampionByName">Get Champion</button>
+
   </div>
 </template>
 
@@ -40,43 +52,63 @@ export default {
   data()
   {
     return {
-      example1: 'jajaja',
-      champions: []
+      example1: '',
+      champions: [],
+      name: 'Ashe',
+      champion: {},
+      updatedChampion: {},
+      attack: 5.5
     }
   },
   methods:
   {
-    async getLanguage () 
-    {
-      try
-      {
-        const res = await axios.post(
-          'http://localhost:4000/graphql', {
-          query: '{ language }'
+    async getLanguage(){
+      try{
+        const res = await axios.post('http://localhost:4000/graphql', {
+          query: `
+            {
+              language
+            }
+          `
         })
         this.example1 = res.data.data.language
       } catch (e) {
         console.log('err', e)
       }
     },
-    async getChampions()
-    {
-      try
-      {
-        const response = await axios.post(
-          'http://localhost:4000/graphql', {
-            query: `{
-              getChampions {
-                name
+    async getChampions(){
+      try{
+        const response = await axios.post('http://localhost:4000/graphql', {
+            query:`
+              {
+                getChampions {
+                  name
+                }
               }
-            }`
+            `
           }
         )
+        // console.log(response.data)
         this.champions = response.data.data
       } catch (e) {
         console.log("Welp + ", e)
       }
-    }
+    },
+    async getChampionByName () {
+      const res = await axios.post('http://localhost:4000/graphql', {
+        query: ` 
+        query GetChampionByName($championName: String!) {
+          getChampionByName(name: $championName) { 
+            name
+            attackDamage
+          }  
+        }`,
+        variables: {
+          championName: this.name
+        }
+      })
+      this.champion = res.data.data.getChampionByName
+    },
   }
 }
 </script>
